@@ -40,12 +40,16 @@ public class MainActivity extends AppCompatActivity {
 
     boolean gameOver=false;
 
+    int sum=18;
+
 
     public void getSymbol(View view){
 
         ImageView image=(ImageView)view;
 
         int tappedImagePosition=Integer.parseInt(image.getTag().toString());
+
+
 
         // Checking whether the block is empty and the game is not over !
         if (gameState[tappedImagePosition]==2 && !gameOver) {
@@ -64,11 +68,13 @@ public class MainActivity extends AppCompatActivity {
                 image.setImageResource(R.drawable.x);
             }
 
-            image.animate().translationXBy(1500).rotation(1800).setDuration(300);
+            sum-=2;
+            image.animate().translationXBy(1500).rotation(1800).setDuration(100);
 
 
             for (int[] winningPosition : winningPositions) {
                 // If gameState of the winning positions are same the a player will win!
+
                 if (gameState[winningPosition[0]] == gameState[winningPosition[1]] && gameState[winningPosition[1]] == gameState[winningPosition[2]] && gameState[winningPosition[2]] != 2) {
 
                     String winner = "";
@@ -91,7 +97,19 @@ public class MainActivity extends AppCompatActivity {
                     winnerText.setVisibility(View.VISIBLE);
 
 
+                }else if(sum==0){
+                    Button playAgain=findViewById(R.id.playAgain);
+
+                    TextView winnerText=findViewById(R.id.winnerText);
+
+                    playAgain.setVisibility(View.VISIBLE);
+                    winnerText.setText("Match drawn ! Try again :)");
+                    winnerText.setVisibility(View.VISIBLE);
                 }
+
+
+
+
             }
         }
     }
@@ -120,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
             gameState[i]=2;
         }
         gameOver=false;
+        sum=18;
 
     }
 
